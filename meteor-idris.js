@@ -59,7 +59,7 @@ function genJsFromIdrisPackage () {
     queueRecompilation();
 }
 
-var idrisHandler = function (compileStep,foo) {
+Plugin.registerSourceHandler("idr", function idrisHandler (compileStep) {
     var fileContents = compileStep.read().toString('utf8');
 
     //console.log(_.keys(compileStep));
@@ -67,7 +67,7 @@ var idrisHandler = function (compileStep,foo) {
     if(match.length>=2){
         var moduleName = match[1];
         moduleNameCache[moduleName]=true;
-     //   console.log(moduleNameCache);
+        //   console.log(moduleNameCache);
     }
     updateIdrisPackage();
     genJsFromIdrisPackage();
@@ -77,8 +77,4 @@ var idrisHandler = function (compileStep,foo) {
      sourcePath: compileStep.inputPath,
      data: compiledTemplates
      });*/
-};
-
-Plugin.registerSourceHandler("idr",idrisHandler);
-
-
+});
